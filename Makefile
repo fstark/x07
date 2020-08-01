@@ -5,6 +5,8 @@ OBJ	= Z80.o Debug.o x07.o T6834.o video.o lit_ini.o
 inc_X11=-I/usr/local/X11/include/
 lib_X11=-L/usr/local/X11/lib
 
+all: dasm x07
+
 dasm:	dasm.c
 	gcc -o dasm dasm.c
 
@@ -28,3 +30,6 @@ video.o:T6834.c Z80.h Tables.h var.h struct.h const.h proto.h
 
 lit_ini.o:lit_ini.c
 	gcc $(CFLAGS) -c -O lit_ini.c
+
+clean:
+	rm -f *.o x07 dasm core

@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
+#include <string.h>
 
 
 #define PROCEDURE
@@ -40,13 +41,13 @@
 #define FIN_FICHIER      -3
 #define VRAI 1
 #define FAUX 0
-void   GetProfile_MultiString (char *,char *,int  *,char  [][],char *);
+void   GetProfile_MultiString (char *,char *,int  *,char  [][30],char *);
 void   GetProfile_String      (char *,char *,char *,char  *,char *);
 char   GetProfile_Char        (char *,char *,char  ,char  *,char *);
 short  GetProfile_Short       (char *,char *,short ,short *,char *);
 int    GetProfile_Int         (char *,char *,int   ,int   *,char *);
 
-static int  lit_param     (FILE *, char *,int *,char [][]);
+static int  lit_param     (FILE *, char *,int *,char [][30]);
 static int  fget_str      (FILE *,char *,int Max);
 static int  enleve_espace (char *);
 static void upper         (char *);
@@ -141,7 +142,7 @@ PROCEDURE void GetProfile_String (char *Section,
  int Nombre=0;
 
  GetProfile_MultiString (Section,Variable,&Nombre, valeur,Fichier_Ini);
- if (valeur) strcpy (Resultat,valeur[0]);
+ if (Nombre>0) strcpy (Resultat,valeur[0]);
  else        strcpy (Resultat,Defaut);
 
 }
@@ -246,7 +247,9 @@ PROCEDURE static int lit_param (FILE *fichier, char *Retour,int *nb_param,char p
      case '#' :
      case '*' : type = TYPE_COMMENTAIRE;
 		break;
-     case '[' : for (r=1;(r<longueur) && (chaine[r]!=']');r++);
+     case '[' :
+        for (r=1;(r<longueur) && (chaine[r]!=']');r++)
+            ;
 		if (chaine[r]==']')
 		 {
 		  strncpy (Retour,&chaine[1],r);
@@ -257,7 +260,9 @@ PROCEDURE static int lit_param (FILE *fichier, char *Retour,int *nb_param,char p
 		else
 		  type = ERREUR_TITRE;
 		break;
-     default  : for (r=0;(r<longueur) && (chaine[r] != '=');r++);
+     default  :
+        for (r=0;(r<longueur) && (chaine[r] != '=');r++)
+            ;
 		if (chaine[r] == '=')
 		 {
 		  strcpy (Retour,chaine);
@@ -312,15 +317,15 @@ PROCEDURE static int lit_param (FILE *fichier, char *Retour,int *nb_param,char p
 
 
 /*----------------------------------------------------------------------*/
-/*                    Proc‰dure FGET_STR                                */
+/*                    Procï¿½dure FGET_STR                                */
 /*                                                                      */
 /* Lecture d'une ligne dans un fichier texte jusqu'a 'CR'               */
 /*----------------------------------------------------------------------*/
-/* ENTREE  : FICHIER : fichier € lire.                                  */
-/*           MAX     : Taille maximal de la chaine € renvoyer           */
-/* SORTIE  : CHAINE  : chaine lu jusqu'a 'CR' ou tronqu‰ si trop longue */
-/* RETOURNE: VRAI si fin de fichier rencontr‰                           */
-/*           FAUX si fin de fichier pas rencontr‰                       */
+/* ENTREE  : FICHIER : fichier ï¿½ lire.                                  */
+/*           MAX     : Taille maximal de la chaine ï¿½ renvoyer           */
+/* SORTIE  : CHAINE  : chaine lu jusqu'a 'CR' ou tronquï¿½ si trop longue */
+/* RETOURNE: VRAI si fin de fichier rencontrï¿½                           */
+/*           FAUX si fin de fichier pas rencontrï¿½                       */
 /*----------------------------------------------------------------------*/
 PROCEDURE static int fget_str(FILE *fichier,char *chaine,int Max)
 {
@@ -343,14 +348,14 @@ PROCEDURE static int fget_str(FILE *fichier,char *chaine,int Max)
 
 
 /*----------------------------------------------------------------------*/
-/*                    Proc‰dure ENLEVE_ESPACE                           */
+/*                    Procï¿½dure ENLEVE_ESPACE                           */
 /*                                                                      */
-/* Enleve les espace se trouvant au d‰but et € la fin d'une chaine de   */
+/* Enleve les espace se trouvant au dï¿½but et ï¿½ la fin d'une chaine de   */
 /*  caractere                                                           */
 /*----------------------------------------------------------------------*/
-/* ENTREE  : CHAINE  : chaine € modifier.                               */
+/* ENTREE  : CHAINE  : chaine ï¿½ modifier.                               */
 /* SORTIE  : CHAINE  : chaine modifier avec les espaces en moins        */
-/* RETOURNE: la longueur de la chaine modifi‰.                          */
+/* RETOURNE: la longueur de la chaine modifiï¿½.                          */
 /*----------------------------------------------------------------------*/
 PROCEDURE static int enleve_espace (char *chaine)
 {
@@ -364,12 +369,12 @@ PROCEDURE static int enleve_espace (char *chaine)
 }
 
 /*------------------------------------------------------------------*/
-/*                        Proc‰dure UPPER                           */
+/*                        Procï¿½dure UPPER                           */
 /*                                                                  */
-/*        Convertion d'une chaine de caractˆre en majuscule         */
+/*        Convertion d'une chaine de caractï¿½re en majuscule         */
 /*------------------------------------------------------------------*/
-/* ENTREE  : CHAINE : Chaine de caractˆre € convertir.              */
-/* SORTIE  : CHAINE : Chaine de caractˆre convertie.                */
+/* ENTREE  : CHAINE : Chaine de caractï¿½re ï¿½ convertir.              */
+/* SORTIE  : CHAINE : Chaine de caractï¿½re convertie.                */
 /* RETOURNE: Rien                                                   */
 /*------------------------------------------------------------------*/
 PROCEDURE static void upper (char *chaine)

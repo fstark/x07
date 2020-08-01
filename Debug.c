@@ -373,7 +373,9 @@ byte DebugZ80(Z80 *R)
     printf("\n[Command,'?']-> ");
     fflush(stdout);fflush(stdin);
 
-    fgets(UserCmd_O,50,stdin);
+    if (!fgets(UserCmd_O,50,stdin))
+        UserCmd_O[0] = '\0';    //  #### FReD : shut compiler up
+
     for(J=0;UserCmd_O[J]>=' ';J++)
       UserCmd[J]=toupper(UserCmd_O[J]);
     UserCmd[J]=UserCmd_O[J]='\0';
@@ -524,7 +526,9 @@ byte DebugZ80(Z80 *R)
       case 'G':
         {
 	 if (*(UserCmd+1) == 'O')
-	     R->Trap=0xFFFF;R->Trace=0;
+	 {
+         R->Trap=0xFFFF;R->Trace=0;
+     }
 	 EndLoop=1;
 	 Result = NOT_END_PGM;
         }

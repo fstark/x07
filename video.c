@@ -46,9 +46,9 @@
 #include <X11/Xutil.h>
 #include <X11/Xos.h>
 #include <X11/keysym.h>
+#include <signal.h>
 
 #include <sys/time.h>
-#include <signal.h>
 
 #include "Z80.h"
 #include "struct.h"
@@ -242,7 +242,9 @@ int Voir_Xevent()
        XNextEvent(display,&ev);
        switch(ev.type) 
         {
-         case Expose : while(XCheckTypedEvent(display,Expose,&ev));
+         case Expose :
+                    while(XCheckTypedEvent(display,Expose,&ev))
+                        ;
                       fprintf (stderr,"Expose\n");
                       Refresh_Video ();
                       break;
@@ -378,13 +380,15 @@ int Voir_Xevent()
 /*----------------------------------------------------------------------------*/
 void new_timer(int a)
 {
- int d;
- int b;
- int c;
+//  #### FReD : ????
+//  int d;
+//  int b;
+//  int c;
  
-  d= 1;
-  b = d+23;
-  c= (d*b)/c;
+//   d= 1;
+//   b = d+23;
+//   c= (d*b)/c;
+
 //    retvideo=128;
 //    buf[0xa7c3]|=128;
 //    do_irq=1;
@@ -394,6 +398,7 @@ void new_timer(int a)
 /*                                                                            */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
+
 void startintr()
 {
  sigset_t set;
@@ -456,7 +461,7 @@ void AffCar(byte x, byte y, byte Car)
     {
      if (Car_Def[Car][P_y] & Mask)
       {
-       /* Positionnement de la mémoire video */
+       /* Positionnement de la mï¿½moire video */
        /*------------------------------------*/
        Ram_Video[(x*NB_POINT_CAR_X)+P_x][(y*NB_POINT_CAR_Y)+P_y]=1;
        
@@ -489,7 +494,7 @@ void LineClear (byte P_y)
 {
  byte x,y;
  
- /* Effacement de la mémoire video */
+ /* Effacement de la mï¿½moire video */
  /*--------------------------------*/
  for (x=0;x<MAX_X;x++)
   for (y=P_y*NB_POINT_CAR_Y;y<(P_y+1)*NB_POINT_CAR_Y;y++)
@@ -553,7 +558,7 @@ void Line (byte x1,byte y1,byte x2,byte y2)
  if (x2<x1) {c=x2;x2=x1;x1=c;};
  if (y2<y1) {c=y2;y2=y1;y1=c;};
  
- /* Tracé d'un segment horizontal */
+ /* Tracï¿½ d'un segment horizontal */
  /*-------------------------------*/
  if ((x2-x1)==0)
   {
@@ -562,7 +567,7 @@ void Line (byte x1,byte y1,byte x2,byte y2)
   }
  else
   {
-   /* Tracé d'un segment vertical */
+   /* Tracï¿½ d'un segment vertical */
    /*-----------------------------*/
    if ((y2-y1)==0)
     {

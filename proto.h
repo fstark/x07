@@ -68,7 +68,7 @@ void Aff_Curseur  (void);
 
 /* Lit_ini.c */
 /*-----------*/
-void   GetProfile_MultiString (char *,char *,int  *,char  [][],char *);
+void   GetProfile_MultiString (char *,char *,int  *,char [][30],char *);
 void   GetProfile_String (char *,char *,char *,char  *,char *);
 char   GetProfile_Char   (char *,char *,char  ,char  *,char *);
 short  GetProfile_Short  (char *,char *,short ,short *,char *);

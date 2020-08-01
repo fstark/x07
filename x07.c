@@ -42,7 +42,7 @@
 #include "proto.h"
 
 /*
-           Mémoire du XO7
+           Mï¿½moire du XO7
   0000    ----------------
          |  XXXX  |  RAM  |
   2000    ----------------
@@ -95,7 +95,7 @@ int main (void)
  ResetZ80 (&Reg_Xo7);
  Reg_Xo7.IPeriod = 100; /* Verification d'IT a tout les cycles     */
  Reg_Xo7.Trace   = 1; /* Mise en route des traces                */
- Int_nsc800_BB   = 0; /* Toutes les IT du NSC800 sont dévalidées */
+ Int_nsc800_BB   = 0; /* Toutes les IT du NSC800 sont dï¿½validï¿½es */
  
  /* Chargement des rom du XO7 */
  /*---------------------------*/
@@ -247,7 +247,7 @@ void OutZ80(register word Port,register byte Value)
    case 0xF6 : /* Configuration de L'UART */
                Port_FX.W.F6 = Value;
                break;
-   case 0xF7 : /* Données émises par l'UART */
+   case 0xF7 : /* Donnï¿½es ï¿½mises par l'UART */
                Port_FX.W.F7 = Value;
                break;
   }
@@ -290,7 +290,7 @@ byte InZ80(register word Port)
                if (Mode_K7) Port_FX.R.F6 |= 0x05;
                Value = Port_FX.R.F6;
                break;
-   case 0xF7 : /* Données recu par l'UART */
+   case 0xF7 : /* Donnï¿½es recu par l'UART */
                Value = Port_FX.R.F7;
                break;
   }
@@ -343,12 +343,11 @@ word LoopZ80(register Z80 *R)
 {
  static int Nb=0;
  static int Lec_K7=0;
- int        Event;
  
  
  if (R->IFF & 0x01) 
   {
-   /* Traitement si les interruption ont ete validées */
+   /* Traitement si les interruption ont ete validï¿½es */
    /*-------------------------------------------------*/
   /* fprintf (stderr,"LoopZ80\n");
    Tmp ++;
@@ -363,7 +362,7 @@ word LoopZ80(register Z80 *R)
      RAM[0x020f]--;
     }*/
 
-   Event = Voir_Xevent ();
+   Voir_Xevent ();
    if (Clavier.Nb_Key)
     {
      Clavier.Nb_Key --;
@@ -680,18 +679,18 @@ void Init_Etat_Xo7 (void)
   GetProfile_Int    ("windows", "size_point_y",3,        &General_Info.size_point_y,INI_FILE);
   GetProfile_Char   ("windows", "Scroll_Min_Y",0,(char*) &General_Info.Scroll_Min_Y,INI_FILE);
   GetProfile_Char   ("windows", "Scroll_Max_Y",4,(char*) &General_Info.Scroll_Max_Y,INI_FILE);
-  GetProfile_String ("F_KEY",   "F_KEY_1" ,"tim?TIME$\r", General_Info.F_Key[0],INI_FILE);
-  GetProfile_String ("F_KEY",   "F_KEY_2" ,"cldCLOAD",    General_Info.F_Key[1],INI_FILE);
-  GetProfile_String ("F_KEY",   "F_KEY_3" ,"locLOCATE",   General_Info.F_Key[2],INI_FILE);
-  GetProfile_String ("F_KEY",   "F_KEY_4" ,"lstLIST",     General_Info.F_Key[3],INI_FILE);
-  GetProfile_String ("F_KEY",   "F_KEY_5" ,"runRUN\r",    General_Info.F_Key[4],INI_FILE);
-  GetProfile_String ("F_KEY",   "F_KEY_6" ,"nul",         General_Info.F_Key[5],INI_FILE);
-  GetProfile_String ("F_KEY",   "F_KEY_7" ,"dat?DATE$\r", General_Info.F_Key[6],INI_FILE);
-  GetProfile_String ("F_KEY",   "F_KEY_8" ,"csaCSAVE",    General_Info.F_Key[7],INI_FILE);
-  GetProfile_String ("F_KEY",   "F_KEY_9" ,"prtPRINT",    General_Info.F_Key[8],INI_FILE);
-  GetProfile_String ("F_KEY",   "F_KEY_10","slpSLEEP",    General_Info.F_Key[9],INI_FILE);
-  GetProfile_String ("F_KEY",   "F_KEY_11","cntCONT\r",   General_Info.F_Key[10],INI_FILE);
-  GetProfile_String ("F_KEY",   "F_KEY_12","nul",         General_Info.F_Key[11],INI_FILE);
+  GetProfile_String ("F_KEY",   "F_KEY_1" ,"tim?TIME$\r", (char*)General_Info.F_Key[0],INI_FILE);
+  GetProfile_String ("F_KEY",   "F_KEY_2" ,"cldCLOAD",    (char*)General_Info.F_Key[1],INI_FILE);
+  GetProfile_String ("F_KEY",   "F_KEY_3" ,"locLOCATE",   (char*)General_Info.F_Key[2],INI_FILE);
+  GetProfile_String ("F_KEY",   "F_KEY_4" ,"lstLIST",     (char*)General_Info.F_Key[3],INI_FILE);
+  GetProfile_String ("F_KEY",   "F_KEY_5" ,"runRUN\r",    (char*)General_Info.F_Key[4],INI_FILE);
+  GetProfile_String ("F_KEY",   "F_KEY_6" ,"nul",         (char*)General_Info.F_Key[5],INI_FILE);
+  GetProfile_String ("F_KEY",   "F_KEY_7" ,"dat?DATE$\r", (char*)General_Info.F_Key[6],INI_FILE);
+  GetProfile_String ("F_KEY",   "F_KEY_8" ,"csaCSAVE",    (char*)General_Info.F_Key[7],INI_FILE);
+  GetProfile_String ("F_KEY",   "F_KEY_9" ,"prtPRINT",    (char*)General_Info.F_Key[8],INI_FILE);
+  GetProfile_String ("F_KEY",   "F_KEY_10","slpSLEEP",    (char*)General_Info.F_Key[9],INI_FILE);
+  GetProfile_String ("F_KEY",   "F_KEY_11","cntCONT\r",   (char*)General_Info.F_Key[10],INI_FILE);
+  GetProfile_String ("F_KEY",   "F_KEY_12","nul",         (char*)General_Info.F_Key[11],INI_FILE);
   
   General_Info.Curs_X       = 0;
   General_Info.Curs_Y       = 0;

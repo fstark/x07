@@ -30,6 +30,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
+#include <time.h>
+
 #include "Z80.h"
 
 #include "struct.h"
@@ -44,7 +46,7 @@ extern byte Car_Def[256][8];
 /*   Declaration du tableau de commande du T6834    */
 /*                                                  */
 /* Longueur de l'envoie de la commande              */
-/* Longueur de la réponse attendue                  */
+/* Longueur de la rï¿½ponse attendue                  */
 /* Chaine de caractere definissant la commande      */
 /*                                                  */
 /*--------------------------------------------------*/
@@ -349,6 +351,7 @@ int Init_Reponse_T6834 (byte Ordre, byte *Rsp, PorT_FX *Port)
 #if AFF_CMD_T6834
               fprintf (stderr,"Adresse = %04X\n",Adresse);
 #endif
+                (void)Adresse;
               if (!R5) {Rsp[0]=0x0A;R5++;}
               else     {Rsp[0]='0';}
               break;
@@ -358,6 +361,7 @@ int Init_Reponse_T6834 (byte Ordre, byte *Rsp, PorT_FX *Port)
 #if AFF_CMD_T6834
               fprintf (stderr,"Adresse = %04X Data:%02X\n",Adresse,Send_Cmd_T6834[1]);
 #endif
+                (void)Adresse;
               break;
                                      
    case 0x07: // Scroll Set
@@ -436,7 +440,7 @@ int Init_Reponse_T6834 (byte Ordre, byte *Rsp, PorT_FX *Port)
                   else fprintf (stderr," $%02X",Send_Cmd_T6834[i]);
                  fputc ('\n',stderr);
 //#endif
-                 strcpy (General_Info.F_Key [Send_Cmd_T6834[1]-1],(char*)&Send_Cmd_T6834[2]);
+                 strcpy ((char *)General_Info.F_Key [Send_Cmd_T6834[1]-1],(char*)&Send_Cmd_T6834[2]);
                  break;
 
    case 0x18: // UDKOn
